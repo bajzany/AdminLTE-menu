@@ -5,10 +5,7 @@
  * Created: 14.12.2018
  */
 
-namespace App\Core\LTEMenu\src\Panel\LeftPanel;
-
-use Bajzany\LTEMenu\Exceptions\LTEException;
-use Bajzany\LTEMenu\Panel\LeftPanel\Item;
+namespace Bajzany\AdminLTE\Panel\LeftPanel;
 
 class Group
 {

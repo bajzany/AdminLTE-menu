@@ -7,10 +7,10 @@
  */
 
 
-namespace Bajzany\LTEMenu\Panel;
+namespace Bajzany\AdminLTE\Panel;
 
-use App\Core\LTEMenu\src\Panel\LeftPanel\Group;
-use Bajzany\LTEMenu\Panel\LeftPanel\Item;
+use Bajzany\AdminLTE\Panel\LeftPanel\Item;
+use Bajzany\AdminLTE\Panel\LeftPanel\Group;
 
 class LeftPanel extends Panel
 {

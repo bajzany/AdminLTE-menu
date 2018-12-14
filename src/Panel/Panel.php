@@ -5,9 +5,9 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Panel;
+namespace Bajzany\AdminLTE\Panel;
 
-use Bajzany\LTEMenu\Menu;
+use Bajzany\AdminLTE\Menu;
 
 abstract class Panel
 {

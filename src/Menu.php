@@ -5,10 +5,10 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu;
+namespace Bajzany\AdminLTE;
 
-use Bajzany\LTEMenu\Panel\LeftPanel;
-use Bajzany\LTEMenu\Panel\TopPanel;
+use Bajzany\AdminLTE\Panel\LeftPanel;
+use Bajzany\AdminLTE\Panel\TopPanel;
 use Nette\DI\Container;
 use Nette\Localization\ITranslator;
 

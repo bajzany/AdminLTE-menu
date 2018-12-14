@@ -6,9 +6,9 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Panel;
+namespace Bajzany\AdminLTE\Panel;
 
-use Bajzany\LTEMenu\Panel\TopPanel\ControlItem;
+use Bajzany\AdminLTE\Panel\TopPanel\ControlItem;
 
 class TopPanel extends Panel
 {

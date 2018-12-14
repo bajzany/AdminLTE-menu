@@ -5,7 +5,7 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Panel\TopPanel;
+namespace Bajzany\AdminLTE\Panel\TopPanel;
 
 use Nette\Localization\ITranslator;
 

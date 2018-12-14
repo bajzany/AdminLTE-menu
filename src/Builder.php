@@ -5,12 +5,12 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu;
+namespace Bajzany\AdminLTE;
 
-use Bajzany\LTEMenu\Exceptions\LTEException;
-use Bajzany\LTEMenu\Panel\TopPanel\ControlItem;
-use Bajzany\LTEMenu\Panel\TopPanel\IItemControl;
-use Bajzany\LTEMenu\Panel\TopPanel\ItemControl;
+use Bajzany\AdminLTE\Exceptions\LTEException;
+use Bajzany\AdminLTE\Panel\TopPanel\ControlItem;
+use Bajzany\AdminLTE\Panel\TopPanel\IItemControl;
+use Bajzany\AdminLTE\Panel\TopPanel\ItemControl;
 use Nette\DI\Container;
 use Nette\Utils\Strings;
 

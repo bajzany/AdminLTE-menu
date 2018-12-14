@@ -7,8 +7,8 @@
 
 namespace Bajzany\AdminLTE\DI;
 
-use Bajzany\LTEMenu\Menu;
-use Bajzany\LTEMenu\MenuControl;
+use Bajzany\AdminLTE\Menu;
+use Bajzany\AdminLTE\MenuControl;
 use Nette\Configurator;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;

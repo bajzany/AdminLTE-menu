@@ -5,7 +5,7 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu;
+namespace Bajzany\AdminLTE;
 
 interface IMenuControl
 {

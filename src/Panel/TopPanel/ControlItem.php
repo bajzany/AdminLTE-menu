@@ -5,9 +5,9 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Panel\TopPanel;
+namespace Bajzany\AdminLTE\Panel\TopPanel;
 
-use Bajzany\LTEMenu\Exceptions\LTEException;
+use Bajzany\AdminLTE\Exceptions\LTEException;
 use Nette\Application\UI\Control;
 
 class ControlItem

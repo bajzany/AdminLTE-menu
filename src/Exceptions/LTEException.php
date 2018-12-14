@@ -5,9 +5,7 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Exceptions;
-
-use Bajzany\LTEMenu\Panel\LeftPanel\Item;
+namespace Bajzany\AdminLTE\Exceptions;
 
 class LTEException extends \Exception
 {

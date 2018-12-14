@@ -5,7 +5,7 @@
  * Created: 13.12.2018
  */
 
-namespace Bajzany\LTEMenu\Panel\LeftPanel;
+namespace Bajzany\AdminLTE\Panel\LeftPanel;
 
 /**
  * Class Item
