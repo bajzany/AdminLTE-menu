@@ -12,7 +12,6 @@
 </aside>
 
 {define recursionItem, $item}
-	{dump $item}
 	{if $item->hasChildren()}
 		<li class="treeview">
 			<a href="{$item->getLink()}">
