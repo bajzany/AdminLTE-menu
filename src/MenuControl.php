@@ -52,6 +52,14 @@ class MenuControl extends AControl
 		$this->template->render();
 	}
 
+	public function renderBreadcrumb()
+	{
+		$this->setDefault();
+		$this->template->breadCrumb = $this->menu->getLeftPanel()->getRouter()->getBreadCrumb();
+		$this->template->setFile(__DIR__ . '/templates/breadcrumb.latte');
+		$this->template->render();
+	}
+
 	public function getComponent($name, $throw = TRUE)
 	{
 		$this->menu->build();

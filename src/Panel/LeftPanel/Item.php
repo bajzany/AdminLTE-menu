@@ -41,7 +41,7 @@ class Item
 	private $rightLabels = [];
 
 	/**
-	 * @var Item|null
+	 * @var Item|Group
 	 */
 	private $parent;
 
@@ -51,12 +51,26 @@ class Item
 	private $children = [];
 
 	/**
-	 * @param string $identification
+	 * @var bool
 	 */
-	public function __construct(string $identification)
+	private $active;
+
+	/**
+	 * @var bool
+	 */
+	private $selected;
+
+	/**
+	 * @param string $identification
+	 * @param Group|Item $parent
+	 */
+	public function __construct(string $identification, $parent)
 	{
-		$this->setIdentification($identification);
+		$this->identification = $identification;
+		$this->parent = $parent;
 		$this->icon = new Icon();
+		$this->active = FALSE;
+		$this->selected = FALSE;
 	}
 
 	/**
@@ -69,10 +83,12 @@ class Item
 
 	/**
 	 * @param string $label
+	 * @return Item
 	 */
 	public function setLabel($label)
 	{
 		$this->label = $label;
+		return $this;
 	}
 
 	/**
@@ -85,10 +101,12 @@ class Item
 
 	/**
 	 * @param string $link
+	 * @return Item
 	 */
 	public function setLink($link)
 	{
 		$this->link = $link;
+		return $this;
 	}
 
 	/**
@@ -100,11 +118,17 @@ class Item
 	}
 
 	/**
-	 * @param Icon $icon
+	 * @param string $class
+	 * @param string $color
+	 * @return Icon
 	 */
-	public function setIcon(Icon $icon)
+	public function setIcon(string $class = 'fa fa-dashboard', string $color = 'white')
 	{
+		$icon = new Icon();
+		$icon->setFontAwesome($class);
+		$icon->setIconColor($color);
 		$this->icon = $icon;
+		return $icon;
 	}
 
 	/**
@@ -132,13 +156,14 @@ class Item
 	}
 
 	/**
-	 * @param Item $child
+	 * @param string $identification
+	 * @return Item
 	 */
-	public function addChild(Item $child)
+	public function createChild(string $identification)
 	{
-		$child->setParent($this);
-		$child->setIdentification($this->getIdentification() . '.' . $child->getIdentification());
-		$this->children[] = $child;
+		$item = new Item($this->getIdentification() . '.' . $identification, $this);
+		$this->children[] = $item;
+		return $item;
 	}
 
 	/**
@@ -166,27 +191,91 @@ class Item
 	}
 
 	/**
-	 * @param string $identification
+	 * @return Item|Group
 	 */
-	public function setIdentification(string $identification)
-	{
-		$this->identification = $identification;
-	}
-
-	/**
-	 * @return Item|null
-	 */
-	public function getParent(): ?Item
+	public function getParent()
 	{
 		return $this->parent;
 	}
 
 	/**
-	 * @param Item|null $parent
+	 * @param string $link
+	 * @return bool
 	 */
-	public function setParent($parent)
+	public function isActiveLink(string $link): bool
 	{
-		$this->parent = $parent;
+		return $this->searchLink($link, $this);
+	}
+
+	/**
+	 * @param string $link
+	 * @param Item $item
+	 * @return bool
+	 */
+	private function searchLink(string $link, Item $item): bool
+	{
+		if ($item->getLink() == $link) {
+			return TRUE;
+		}
+
+		foreach ($this->getChildren() as $child) {
+			return $this->searchLink($link, $child);
+		}
+
+		return FALSE;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isActive(): bool
+	{
+		return $this->active;
+	}
+
+	/**
+	 * @param bool $active
+	 * @param bool $selected
+	 * @return Item
+	 */
+	public function setActive($active, $selected = FALSE)
+	{
+		$this->selected = $selected;
+		$this->active = $active;
+		if (!empty($this->getParent())) {
+			$this->parent->setActive(TRUE);
+		}
+		return $this;
+	}
+
+	/**
+	 * @return Group
+	 */
+	public function getGroup()
+	{
+		if ($this->parent instanceof Group) {
+			return $this->parent;
+		}
+		return $this->parent->getGroup();
+	}
+
+	/**
+	 * @return Item|null
+	 */
+	public function getParentItem(): ?Item
+	{
+		if ($this->parent instanceof Group) {
+			return NULL;
+		}
+		return $this->parent;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isSelected(): bool
+	{
+		return $this->selected;
 	}
 
 }

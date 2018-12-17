@@ -1,0 +1,22 @@
+<section n:if="!empty($breadCrumb)" class="content-header">
+	<h1>
+		{$breadCrumb[0]->getLabel()}
+	</h1>
+	<ol class="breadcrumb">
+		{foreach $breadCrumb as $key => $item}
+			{if $key == 0}
+				<li class="active">
+					<i class="{$item->getIcon()->getFontAwesome()}"></i>
+					{$item->getLabel()}
+				</li>
+			{else}
+				<li>
+					<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+						<i class="{$item->getIcon()->getFontAwesome()}"></i>
+						{$item->getLabel()}
+					</a>
+				</li>
+			{/if}
+		{/foreach}
+	</ol>
+</section>

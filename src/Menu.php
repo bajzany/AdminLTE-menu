@@ -64,6 +64,9 @@ class Menu
 		$this->translator = new Translator();
 	}
 
+	/**
+	 * @return MenuControl
+	 */
 	public function createComponent()
 	{
 		if (!$this->menuControl) {

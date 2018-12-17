@@ -27,4 +27,21 @@ class LTEException extends \Exception
 		return new self("Is not instance of IItemControl");
 	}
 
+	/**
+	 * @param string $id
+	 * @return LTEException
+	 */
+	public static function duplicityIdentification(string $id)
+	{
+		return new self("Duplicity identification {$id}");
+	}
+
+	/**
+	 * @return LTEException
+	 */
+	public static function isNotBuild()
+	{
+		return new self("Menu is not build");
+	}
+
 }

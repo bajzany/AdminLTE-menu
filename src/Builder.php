@@ -8,9 +8,12 @@
 namespace Bajzany\AdminLTE;
 
 use Bajzany\AdminLTE\Exceptions\LTEException;
+use Bajzany\AdminLTE\Panel\LeftPanel\Group;
+use Bajzany\AdminLTE\Panel\LeftPanel\Item;
 use Bajzany\AdminLTE\Panel\TopPanel\ControlItem;
 use Bajzany\AdminLTE\Panel\TopPanel\IItemControl;
 use Bajzany\AdminLTE\Panel\TopPanel\ItemControl;
+use Bajzany\AdminLTE\Router\Router;
 use Nette\DI\Container;
 use Nette\Utils\Strings;
 
@@ -51,6 +54,9 @@ class Builder
 
 		$serviceList = $this->getBuildMenuServices();
 
+		/**
+		 * GLOBAL
+		 */
 		foreach ($serviceList as $service) {
 			$service->build($this->menu);
 			foreach ($this->onBuild as $event) {
@@ -60,8 +66,29 @@ class Builder
 			}
 		}
 
+		/**
+		 * LEFT PANEL
+		 */
 		$menuControl = $this->menu->createComponent();
+		$itemList = [];
+		$groupList = $this->menu->getLeftPanel()->getGroups();
+		$selectedItem = NULL;
+		foreach ($groupList as $group) {
+			$items = $group->getItemsList();
+			$itemList = array_merge($itemList, $items);
+			foreach ($items as $item) {
+				if ($item->getLink() != '#' && $menuControl->getPresenter()->isLinkCurrent($item->getLink())) {
+					$item->setActive(TRUE, TRUE);
+					$selectedItem = $item;
+				}
+			}
+		}
 
+		$this->menu->getLeftPanel()->setRouter(new Router($this->menu, $selectedItem, $itemList, $groupList));
+
+		/**
+		 * TOP PANEL
+		 */
 		foreach ($this->menu->getTopPanel()->getControls() as $controlItem) {
 			$component = $this->createComponent($controlItem);
 			$controlItem->setComponent($component);

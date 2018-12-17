@@ -9,8 +9,10 @@
 
 namespace Bajzany\AdminLTE\Panel;
 
+use Bajzany\AdminLTE\Exceptions\LTEException;
 use Bajzany\AdminLTE\Panel\LeftPanel\Item;
 use Bajzany\AdminLTE\Panel\LeftPanel\Group;
+use Bajzany\AdminLTE\Router\Router;
 
 class LeftPanel extends Panel
 {
@@ -21,6 +23,11 @@ class LeftPanel extends Panel
 	private $groups = [];
 
 	/**
+	 * @var Router
+	 */
+	private $router;
+
+	/**
 	 * @return Group[]
 	 */
 	public function getGroups(): array
@@ -29,11 +36,13 @@ class LeftPanel extends Panel
 	}
 
 	/**
-	 * @param Group $group
+	 * @param string $key
+	 * @return Group
 	 */
-	public function addGroup(Group $group)
+	public function createGroup(string $key)
 	{
-		$this->groups[] = $group;
+		$this->groups[] = $group = new Group($key, $this);
+		return $group;
 	}
 
 	/**
@@ -76,6 +85,28 @@ class LeftPanel extends Panel
 		}
 
 		return NULL;
+	}
+
+	/**
+	 * @return Router
+	 * @throws LTEException
+	 */
+	public function getRouter(): Router
+	{
+		if (!$this->getMenu()->getBuilder()->isBuilt()) {
+			throw LTEException::isNotBuild();
+		}
+		return $this->router;
+	}
+
+	/**
+	 * @param Router $router
+	 * @return $this
+	 */
+	public function setRouter($router)
+	{
+		$this->router = $router;
+		return $this;
 	}
 
 }

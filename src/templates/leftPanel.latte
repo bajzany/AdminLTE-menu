@@ -13,9 +13,9 @@
 
 {define recursionItem, $item}
 	{if $item->hasChildren()}
-		<li class="treeview">
-			<a href="{$item->getLink()}">
-				<i class="fa fa-dashboard"></i> <span>{$item->getLabel()}</span>
+		<li class="treeview {if $item->isActive()} active {/if}">
+			<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span class="pull-right-container">
 				<i class="fa fa-angle-left pull-right"></i>
 			</span>
@@ -25,8 +25,8 @@
 					{if $child->hasChildren()}
 						{include recursionItem, $child}
 					{else}
-						<li>
-							<a href="{$child->getLink()}">
+						<li {if $child->isActive()} class="active" {/if}>
+							<a {if $child->getLink() == '#'}href="{$child->getLink()}" {else} href="{plink $child->getLink()}"{/if} >
 								<i n:if="$child->getIcon()" style="color: {$child->getIcon()->getIconColor()}" class="{$child->getIcon()->getFontAwesome()}"></i>{$child->getLabel()}
 							</a>
 						</li>
@@ -35,9 +35,9 @@
 			</ul>
 		</li>
 	{else}
-		<li>
-			<a href="{$item->getLink()}">
-				<i class="{$item->getIcon()}"></i> <span>{$item->getLabel()}</span>
+		<li {if $item->isActive()} class="active" {/if}>
+			<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span n:if="$item->hasRightLabels()" class="pull-right-container">
 					{foreach $item->getRightLabels() as $label}
 						<small class="label pull-right" style="color: {$label->getTextColor()}; background-color: {$label->getBackGroundColor()}">{$label->getText()}</small>
