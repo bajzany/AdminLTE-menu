@@ -16,6 +16,8 @@ use Nette\DI\CompilerExtension;
 class AdminLTEMenuExtensions extends CompilerExtension
 {
 
+	const TAG_EVENT = 'adminLTE.menu';
+
 	public function loadConfiguration()
 	{
 		$builder = $this->getContainerBuilder();

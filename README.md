@@ -75,8 +75,13 @@ This class have one function build with parameter Bajzany\AdminLTE\Menu.
     use Bajzany\AdminLTE\Menu;
     use Bajzany\AdminLTE\Panel\TopPanel\ControlItem;
     use Bundles\User\Menu\DropDown\IUserDropDown;
+    use Chomenko\AutoInstall\AutoInstall;
+    use Chomenko\AutoInstall\Config;
     
-    class BuildMenu implements BundleMenu
+    /**
+     * @Config\Tag({"adminLTE.menu"})
+     */
+    class BuildMenu implements BundleMenu, AutoInstall
     {
     
     	public function build(Menu $menu)

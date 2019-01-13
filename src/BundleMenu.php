@@ -1,15 +1,36 @@
 <?php
 /**
- * Author: Radek Zíka
- * Email: radek.zika@dipcom.cz
- * Created: 13.12.2018
+ * Author: Mykola Chomenko
+ * Email: mykola.chomenko@dipcom.cz
+ * Created: 11.01.2019
  */
 
 namespace Bajzany\AdminLTE;
 
-interface BundleMenu
+abstract class BundleMenu implements IBundleMenu
 {
 
-	public function build(Menu $menu);
+	/**
+	 * @param Menu $menu
+	 * @return int
+	 */
+	public function getSortPriority(Menu $menu): int
+	{
+		return 1;
+	}
+
+	/**
+	 * @param Menu $menu
+	 */
+	public function beforeBuild(Menu $menu)
+	{
+	}
+
+	/**
+	 * @param Menu $menu
+	 */
+	public function afterBuild(Menu $menu)
+	{
+	}
 
 }

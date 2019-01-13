@@ -7,9 +7,8 @@
 
 namespace Bajzany\AdminLTE;
 
+use Bajzany\AdminLTE\DI\AdminLTEMenuExtensions;
 use Bajzany\AdminLTE\Exceptions\LTEException;
-use Bajzany\AdminLTE\Panel\LeftPanel\Group;
-use Bajzany\AdminLTE\Panel\LeftPanel\Item;
 use Bajzany\AdminLTE\Panel\TopPanel\ControlItem;
 use Bajzany\AdminLTE\Panel\TopPanel\IItemControl;
 use Bajzany\AdminLTE\Panel\TopPanel\ItemControl;
@@ -58,12 +57,16 @@ class Builder
 		 * GLOBAL
 		 */
 		foreach ($serviceList as $service) {
-			$service->build($this->menu);
+			$service->create($this->menu);
 			foreach ($this->onBuild as $event) {
 				if ($event['name'] === get_class($service)) {
 					call_user_func_array($event['callable'], [$service]);
 				}
 			}
+		}
+
+		foreach ($serviceList as $service) {
+			$service->beforeBuild($this->menu);
 		}
 
 		/**
@@ -103,6 +106,10 @@ class Builder
 			$menuControl->addComponent($component, $name);
 		}
 
+		foreach ($serviceList as $service) {
+			$service->afterBuild($this->menu);
+		}
+
 		$this->built = TRUE;
 	}
 
@@ -127,18 +134,35 @@ class Builder
 
 
 	/**
-	 * @return BundleMenu[]
+	 * @return IBundleMenu[]
 	 */
 	private function getBuildMenuServices()
 	{
-		$builds = $this->container->findByType(BundleMenu::class);
+		$builds = $this->container->findByTag(AdminLTEMenuExtensions::TAG_EVENT);
 
 		$serviceList = [];
-		foreach ($builds as $serviceName) {
+		foreach ($builds as $serviceName => $value) {
 			$service = $this->container->getService($serviceName);
-			$serviceList[] = $service;
+
+			if (!$service instanceof IBundleMenu) {
+				continue;
+			}
+
+			$serviceList[] = [
+				"service" => $service,
+				"position" => $service->getSortPriority($this->menu),
+			];
 		}
-		return $serviceList;
+
+		usort($serviceList, function ($item1, $item2) {
+			return $item1['position'] <=> $item2['position'];
+		});
+
+		$list = [];
+		foreach ($serviceList as $item) {
+			$list[] = $item['service'];
+		}
+		return $list;
 	}
 
 	/**
@@ -157,7 +181,7 @@ class Builder
 	{
 		$this->onBuild[] = [
 			'name' => $className,
-			'callable' => $callable
+			'callable' => $callable,
 		];
 	}
 

@@ -38,12 +38,41 @@ class LeftPanel extends Panel
 	/**
 	 * @param string $key
 	 * @return Group
+	 * @throws LTEException
 	 */
 	public function createGroup(string $key)
 	{
-		$this->groups[] = $group = new Group($key, $this);
+		if ($this->issetGroup($key)) {
+			throw LTEException::groupExists($key);
+		}
+
+		$this->groups[$key] = $group = new Group($key, $this);
 		return $group;
 	}
+
+	/**
+	 * @param string $key
+	 * @return Group|null
+	 */
+	public function getGroup(string $key): ?Group
+	{
+		if ($this->issetGroup($key)) {
+			return $this->groups[$key];
+		}
+	}
+
+	/**
+	 * @param string $key
+	 * @return bool
+	 */
+	public function issetGroup(string $key): bool
+	{
+		if (array_key_exists($key, $this->groups)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 
 	/**
 	 * @param string $groupIdentification

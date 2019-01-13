@@ -20,6 +20,15 @@ class LTEException extends \Exception
 	}
 
 	/**
+	 * @param string $group
+	 * @return LTEException
+	 */
+	public static function groupExists(string $group)
+	{
+		return new self("Group exists '{$group}'");
+	}
+
+	/**
 	 * @return LTEException
 	 */
 	public static function isNotItemControl()
