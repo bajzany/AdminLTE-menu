@@ -80,10 +80,17 @@ class Builder
 			$items = $group->getItemsList();
 			$itemList = array_merge($itemList, $items);
 			foreach ($items as $item) {
-				if ($item->getLink() != '#' && $menuControl->getPresenter()->isLinkCurrent($item->getLink())) {
-					$item->setActive(TRUE, TRUE);
-					$selectedItem = $item;
+				$link = $item->getLink();
+				if ($link['destination'] === '#') {
+					continue;
 				}
+
+				if (!$menuControl->getPresenter()->isLinkCurrent($link['destination'], $link['parameters'])) {
+					continue;
+				}
+
+				$item->setActive(TRUE, TRUE);
+				$selectedItem = $item;
 			}
 		}
 

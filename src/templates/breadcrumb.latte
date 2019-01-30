@@ -11,7 +11,7 @@
 				</li>
 			{else}
 				<li>
-					<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+					<a {if $item->getLink()['destination'] == '#'}href="{$item->getLink()['destination']}" {else} href="{$presenter->link($item->getLink()['destination'], $item->getLink()['parameters'])}"{/if} >
 						<i class="{$item->getIcon()->getFontAwesome()}"></i>
 						{$item->getLabel()}
 					</a>

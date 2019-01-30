@@ -11,10 +11,18 @@
 	</section>
 </aside>
 
+{define link}
+	{if $item->getLink()['destination'] == '#'}
+		href="{$item->getLink()['destination']}"
+	{else}
+		href="{$presenter->link($item->getLink()['destination'], $item->getLink()['parameters'])}"
+	{/if}
+{/define}
+
 {define recursionItem, $item}
 	{if $item->hasChildren()}
-		<li class="treeview {if $item->isActive()} active {/if}">
-			<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+		<li n:if="!$item->isHidden()" class="treeview {if $item->isActive()} active {/if}">
+			<a {include #link, item => $item|noescape}>
 				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span class="pull-right-container">
 				<i class="fa fa-angle-left pull-right"></i>
@@ -25,8 +33,8 @@
 					{if $child->hasChildren()}
 						{include recursionItem, $child}
 					{else}
-						<li {if $child->isActive()} class="active" {/if}>
-							<a {if $child->getLink() == '#'}href="{$child->getLink()}" {else} href="{plink $child->getLink()}"{/if} >
+						<li n:if="!$child->isHidden()" {if $child->isActive()} class="active" {/if}>
+							<a {include #link, item => $child|noescape} >
 								<i n:if="$child->getIcon()" style="color: {$child->getIcon()->getIconColor()}" class="{$child->getIcon()->getFontAwesome()}"></i>{$child->getLabel()}
 							</a>
 						</li>
@@ -35,8 +43,8 @@
 			</ul>
 		</li>
 	{else}
-		<li {if $item->isActive()} class="active" {/if}>
-			<a {if $item->getLink() == '#'}href="{$item->getLink()}" {else} href="{plink $item->getLink()}"{/if} >
+		<li n:if="!$item->isHidden()" {if $item->isActive()} class="active" {/if}>
+			<a {include #link, item => $item|noescape} >
 				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span n:if="$item->hasRightLabels()" class="pull-right-container">
 					{foreach $item->getRightLabels() as $label}

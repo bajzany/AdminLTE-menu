@@ -28,7 +28,10 @@ class Item
 	/**
 	 * @var string
 	 */
-	private $link = '#';
+	private $link = [
+		'destination' => '#',
+		'parameters' => [],
+	];
 
 	/**
 	 * @var Icon
@@ -59,6 +62,8 @@ class Item
 	 * @var bool
 	 */
 	private $selected;
+
+	private $hidden = FALSE;
 
 	/**
 	 * @param string $identification
@@ -92,20 +97,39 @@ class Item
 	}
 
 	/**
+	 * @param bool $hidden
+	 */
+	public function setHidden($hidden = TRUE)
+	{
+		$this->hidden = $hidden;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isHidden(): bool
+	{
+		return $this->hidden;
+	}
+
+	/**
 	 * @return string
 	 */
-	public function getLink(): ?string
+	public function getLink(): array
 	{
 		return $this->link;
 	}
 
 	/**
-	 * @param string $link
+	 * @param string $destination
 	 * @return Item
 	 */
-	public function setLink($link)
+	public function setLink($destination, array $parameters = [])
 	{
-		$this->link = $link;
+		$this->link = [
+			"destination" => $destination,
+			"parameters" => $parameters
+		];
 		return $this;
 	}
 
@@ -169,8 +193,17 @@ class Item
 	/**
 	 * @return bool
 	 */
-	public function hasChildren(): bool
+	public function hasChildren(bool $hidden = FALSE): bool
 	{
+		if (!$hidden) {
+			foreach ($this->getChildren() as $child) {
+				if ($child->isHidden() === FALSE) {
+					return TRUE;
+				}
+			}
+			return FALSE;
+		}
+
 		return !empty($this->getChildren());
 	}
 
