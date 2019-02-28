@@ -81,9 +81,9 @@ class Menu
 		return $this->menuControl;
 	}
 
-	public function build()
+	public function build(string $type)
 	{
-		$this->builder->build();
+		$this->builder->build($type);
 	}
 
 	/**

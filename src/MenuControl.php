@@ -31,30 +31,43 @@ class MenuControl extends AControl
 		$this->menu = $menu;
 	}
 
-	private function setDefault()
+	/**
+	 * @param string $type
+	 */
+	private function setDefault(string $type)
 	{
-		$this->menu->build();
+		$this->menu->build($type);
 		$this->template->menu = $this->menu;
 		$this->template->setTranslator($this->getTranslator());
 	}
 
-	public function renderTop()
+	/**
+	 * @param string $type
+	 */
+	public function renderTop(string $type = 'admin')
 	{
-		$this->setDefault();
+		$this->setDefault($type);
 		$this->template->setFile(__DIR__ . '/templates/topPanel.latte');
 		$this->template->render();
 	}
 
-	public function renderLeft()
+	/**
+	 * @param string $type
+	 */
+	public function renderLeft(string $type = 'admin')
 	{
-		$this->setDefault();
+		$this->setDefault($type);
 		$this->template->setFile(__DIR__ . '/templates/leftPanel.latte');
 		$this->template->render();
 	}
 
-	public function renderBreadcrumb()
+	/**
+	 * @param string $type
+	 * @throws Exceptions\LTEException
+	 */
+	public function renderBreadcrumb(string $type = 'admin')
 	{
-		$this->setDefault();
+		$this->setDefault($type);
 		$this->template->breadCrumb = $this->menu->getLeftPanel()->getRouter()->getBreadCrumb();
 		$this->template->setFile(__DIR__ . '/templates/breadcrumb.latte');
 		$this->template->render();

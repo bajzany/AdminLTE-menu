@@ -45,13 +45,13 @@ class Builder
 		$this->menu = $menu;
 	}
 
-	public function build()
+	public function build(string $type)
 	{
 		if ($this->built) {
 			return;
 		}
 
-		$serviceList = $this->getBuildMenuServices();
+		$serviceList = $this->getBuildMenuServices($type);
 
 		/**
 		 * GLOBAL
@@ -139,11 +139,11 @@ class Builder
 		return $control;
 	}
 
-
 	/**
+	 * @param string $type
 	 * @return IBundleMenu[]
 	 */
-	private function getBuildMenuServices()
+	private function getBuildMenuServices(string $type)
 	{
 		$builds = $this->container->findByTag(AdminLTEMenuExtensions::TAG_EVENT);
 
@@ -152,6 +152,10 @@ class Builder
 			$service = $this->container->getService($serviceName);
 
 			if (!$service instanceof IBundleMenu) {
+				continue;
+			}
+
+			if ($type !== 'admin' && $type !== $value) {
 				continue;
 			}
 
