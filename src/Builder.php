@@ -155,7 +155,7 @@ class Builder
 				continue;
 			}
 
-			if ($type !== 'admin' && $type !== $value) {
+			if (( $type === 'admin' && $value !== TRUE ) || ( $type !== 'admin' && $value !== $type )) {
 				continue;
 			}
 
