@@ -7,6 +7,8 @@
 
 namespace Bajzany\AdminLTE\Panel\LeftPanel;
 
+use Bajzany\AdminLTE\Exceptions\LTEException;
+
 /**
  * Class Item
  * @package Bajzany\Menu
@@ -309,6 +311,55 @@ class Item
 	public function isSelected(): bool
 	{
 		return $this->selected;
+	}
+
+	/**
+	 * @return Item[]
+	 * @throws \Exception
+	 */
+	public function getItemsList()
+	{
+		$list = [];
+		foreach ($this->children as $item) {
+			$list[$item->getIdentification()] = $item;
+			$this->recursiveList($item, $list);
+		}
+		return $list;
+	}
+
+	/**
+	 * @param Item $item
+	 * @param array $list
+	 * @throws \Exception
+	 */
+	private function recursiveList(Item $item, &$list = [])
+	{
+		foreach ($item->getChildren() as $child) {
+			if (array_key_exists($child->getIdentification(), $list)) {
+				throw LTEException::duplicityIdentification($child->getIdentification());
+			}
+			$list[$child->getIdentification()] = $child;
+			$this->recursiveList($child, $list);
+		}
+	}
+
+	/**
+	 * @return Item[]
+	 * @throws \Exception
+	 */
+	public function getVisibleChildren(): array
+	{
+		$visibleChildren = [];
+
+		$list = $this->getItemsList();
+		foreach ($list as $item) {
+			if ($item->isHidden()) {
+				continue;
+			}
+			$visibleChildren[] = $item;
+		}
+
+		return $visibleChildren;
 	}
 
 }

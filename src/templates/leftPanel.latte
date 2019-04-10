@@ -2,10 +2,12 @@
 	<section class="sidebar">
 		<ul class="sidebar-menu" data-widget="tree">
 			{foreach $menu->getLeftPanel()->getGroups() as $group}
-				<li n:if="!empty($group->getTitle())" class="header">{$group->getTitle()}</li>
-				{foreach $group->getItems() as $item}
-					{include recursionItem, $item}
-				{/foreach}
+				{if !empty($group->getVisibleChildren())}
+					<li n:if="!empty($group->getTitle())" class="header">{$group->getTitle()}</li>
+					{foreach $group->getItems() as $item}
+						{include recursionItem, $item}
+					{/foreach}
+				{/if}
 			{/foreach}
 		</ul>
 	</section>
@@ -25,8 +27,8 @@
 			<a {include #link, item => $item|noescape}>
 				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span class="pull-right-container">
-				<i class="fa fa-angle-left pull-right"></i>
-			</span>
+					<i class="fa fa-angle-left pull-right"></i>
+				</span>
 			</a>
 			<ul class="treeview-menu">
 				{foreach $item->getChildren() as $child}
@@ -43,14 +45,14 @@
 			</ul>
 		</li>
 	{else}
-		<li n:if="!$item->isHidden()" {if $item->isActive()} class="active" {/if}>
+		<li n:if="!$item->isHidden() && $item->getLink()['destination'] != '#'" {if $item->isActive()} class="active" {/if}>
 			<a {include #link, item => $item|noescape} >
 				<i style="color: {$item->getIcon()->getIconColor()}" class="{$item->getIcon()->getFontAwesome()}"></i> <span>{$item->getLabel()}</span>
 				<span n:if="$item->hasRightLabels()" class="pull-right-container">
-					{foreach $item->getRightLabels() as $label}
-						<small class="label pull-right" style="color: {$label->getTextColor()}; background-color: {$label->getBackGroundColor()}">{$label->getText()}</small>
-					{/foreach}
-				</span>
+				{foreach $item->getRightLabels() as $label}
+					<small class="label pull-right" style="color: {$label->getTextColor()}; background-color: {$label->getBackGroundColor()}">{$label->getText()}</small>
+				{/foreach}
+			</span>
 			</a>
 		</li>
 	{/if}

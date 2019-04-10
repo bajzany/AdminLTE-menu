@@ -160,6 +160,26 @@ class Group
 	}
 
 	/**
+	 * @return Item[]
+	 * @throws \Exception
+	 */
+	public function getVisibleChildren(): array
+	{
+		$visibleChildren = [];
+
+		$list = $this->getItemsList();
+		foreach ($list as $item) {
+			if ($item->isHidden()) {
+				continue;
+			}
+			$visibleChildren[] = $item;
+		}
+
+		return $visibleChildren;
+	}
+
+
+	/**
 	 * @return LeftPanel
 	 */
 	public function getTopPanel(): LeftPanel
