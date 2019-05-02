@@ -96,20 +96,19 @@ class Builder
 
 		$this->menu->getLeftPanel()->setRouter(new Router($this->menu, $selectedItem, $itemList, $groupList));
 
-		/**
-		 * TOP PANEL
-		 */
+		/*** TOP PANEL*/
 		foreach ($this->menu->getTopPanel()->getControls() as $controlItem) {
+
 			$component = $this->createComponent($controlItem);
 			$controlItem->setComponent($component);
-
 			$component->setTranslator($this->menu->getTranslator());
 			$component->setItem($controlItem);
-
 			$names = Strings::webalize(get_class($component));
 			$names = explode("-", $names);
 			$names = array_map('ucfirst', $names);
 			$name = implode("", $names);
+
+			$controlItem->setPriority($component->getSortPriority($this->menu));
 			$menuControl->addComponent($component, $name);
 		}
 

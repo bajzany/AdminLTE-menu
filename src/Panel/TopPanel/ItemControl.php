@@ -7,6 +7,7 @@
 
 namespace Bajzany\AdminLTE\Panel\TopPanel;
 
+use Bajzany\AdminLTE\Menu;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
 
@@ -81,6 +82,15 @@ abstract class ItemControl extends Control implements IItemControl
 	public function setItem(ControlItem $item)
 	{
 		$this->item = $item;
+	}
+
+	/**
+	 * @param Menu $menu
+	 * @return int
+	 */
+	public function getSortPriority(Menu $menu): int
+	{
+		return 1;
 	}
 
 }

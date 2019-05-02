@@ -39,6 +39,11 @@ class ControlItem
 	private $component;
 
 	/**
+	 * @var int
+	 */
+	private $priority = 1;
+
+	/**
 	 * @param string $interface
 	 * @throws LTEException
 	 */
@@ -49,6 +54,24 @@ class ControlItem
 		}
 
 		$this->interface = $interface;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getPriority(): int
+	{
+		return $this->priority;
+	}
+
+	/**
+	 * @param int $priority
+	 * @return $this
+	 */
+	public function setPriority($priority)
+	{
+		$this->priority = $priority;
+		return $this;
 	}
 
 	/**

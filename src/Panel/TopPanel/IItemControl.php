@@ -7,6 +7,7 @@
 
 namespace Bajzany\AdminLTE\Panel\TopPanel;
 
+use Bajzany\AdminLTE\Menu;
 use Nette\Localization\ITranslator;
 
 interface IItemControl
@@ -30,5 +31,11 @@ interface IItemControl
 	public function setItem(ControlItem $item);
 
 	public function getItem(): ?ControlItem;
+
+	/**
+	 * @param Menu $menu
+	 * @return int
+	 */
+	public function getSortPriority(Menu $menu): int;
 
 }

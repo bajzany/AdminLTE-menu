@@ -31,6 +31,12 @@ class TopPanel extends Panel
 	 */
 	public function getControls()
 	{
-		return $this->controls;
+		$controls = $this->controls;
+		usort($controls, function ($item1, $item2) {
+			return $item1->getPriority() <=> $item2->getPriority();
+		});
+
+		return $controls;
 	}
+
 }
