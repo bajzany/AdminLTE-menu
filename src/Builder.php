@@ -93,8 +93,14 @@ class Builder
 				$selectedItem = $item;
 			}
 		}
+		$leftPanel = $this->menu->getLeftPanel();
+		$router = new Router($this->menu, $selectedItem, $itemList, $groupList);
 
-		$this->menu->getLeftPanel()->setRouter(new Router($this->menu, $selectedItem, $itemList, $groupList));
+		foreach ($leftPanel->getOnCreateRouter() as $callable) {
+			call_user_func_array($callable, [$router]);
+		}
+
+		$leftPanel->setRouter($router);
 
 		/*** TOP PANEL*/
 		foreach ($this->menu->getTopPanel()->getControls() as $controlItem) {

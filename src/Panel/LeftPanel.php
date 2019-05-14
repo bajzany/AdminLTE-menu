@@ -27,6 +27,9 @@ class LeftPanel extends Panel
 	 */
 	private $router;
 
+	/** @var callable[] */
+	private $onCreateRouter = [];
+
 	/**
 	 * @return Group[]
 	 */
@@ -132,9 +135,27 @@ class LeftPanel extends Panel
 	 * @param Router $router
 	 * @return $this
 	 */
-	public function setRouter($router)
+	public function setRouter(Router $router)
 	{
 		$this->router = $router;
+		return $this;
+	}
+
+	/**
+	 * @return callable[]
+	 */
+	public function getOnCreateRouter(): array
+	{
+		return $this->onCreateRouter;
+	}
+
+	/**
+	 * @param callable $onCreateRouter
+	 * @return $this
+	 */
+	public function addOnCreateRouter(callable $onCreateRouter)
+	{
+		$this->onCreateRouter[] = $onCreateRouter;
 		return $this;
 	}
 

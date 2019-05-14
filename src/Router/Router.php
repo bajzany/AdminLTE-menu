@@ -55,6 +55,7 @@ class Router
 		return $this->selectedItem;
 	}
 
+	/** @return Item[] */
 	public function getBreadCrumb()
 	{
 		$list = [];
