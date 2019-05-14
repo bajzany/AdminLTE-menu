@@ -16,10 +16,7 @@
 
 Inject this menu into your basePresenter
 
-	/**
-	 * @var Menu @inject
-	 */
-	public $menu;
+	use MenuTrait;
 	
 	public function createComponentMenu()
 	{
@@ -214,3 +211,10 @@ This is your custom render.
     
     }
 
+###### For change current breadcrumb title 
+
+	
+	public function renderDefault()
+	{
+		$this->changeCurrentBreadcrumbTitle('CUSTOM TITLE');
+	}
