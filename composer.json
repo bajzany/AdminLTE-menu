@@ -22,11 +22,19 @@
     "nette/application": "^2.4",
     "nette/bootstrap": "^2.4",
     "latte/latte": "^2.4",
-    "nette/utils": "^2.4"
+    "nette/utils": "^2.4",
+    "nettpack/stage": "^1.0"
   },
   "autoload": {
     "psr-4": {
       "Bajzany\\AdminLTE\\": "src/"
+    }
+  },
+  "extra": {
+    "nettpack": {
+      "resolve": {
+        "AdminLTEMenu": "./src/Assets/main.js"
+      }
     }
   }
 }
